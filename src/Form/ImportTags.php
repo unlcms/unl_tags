@@ -9,7 +9,7 @@ use Drupal\taxonomy\Entity\Term;
 use Drupal\taxonomy\Entity\Vocabulary;
 
 /**
- * Configure book settings for this site.
+ * Form to import set of UNL tags.
  */
 class ImportTags extends FormBase {
 
@@ -62,7 +62,7 @@ class ImportTags extends FormBase {
     }
     
     if (!$vocab = Vocabulary::load('unl_tags')) {
-      //create it
+      // Create it.
       $vocab = Vocabulary::create([
         'vid' => 'unl_tags',
         'description' => 'UNL controlled vocabulary',
@@ -75,9 +75,8 @@ class ImportTags extends FormBase {
     $updated = 0;
     $removed = 0;
 
-
     $existing = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadByProperties(['vid'=>$vocab->id()]);
-    
+
     foreach ($existing as $term) {
       $machineName = $machine_name = $term->get('machine_name')->first()->getValue()['value'];
       if (!isset($tags[$machineName])) {
@@ -88,16 +87,18 @@ class ImportTags extends FormBase {
     
     foreach ($tags as $machineName=>$humanName) {
       $term_existing = taxonomy_term_machine_name_load($machineName, $vocab->id());
-      //TODO: load by machine name instead
+      // TODO: load by machine name instead
       
       if (count($term_existing) == 0) {
         $new_term = Term::create(['name' => $humanName, 'vid' => $vocab->id(), 'machine_name'=>$machineName]);
         $new_term->save();
         $added++;
-      } else {
+      } 
+      else {
         if (is_array($term_existing)) {
           $term = $term_existing[0];
-        } else {
+        } 
+        else {
           $term = $term_existing;
         }
         
@@ -109,7 +110,7 @@ class ImportTags extends FormBase {
         }
       }
       
-      //TODO: what about COB (college) vs COB (building)
+      // TODO: what about COB (college) vs COB (building)
     }
     
     drupal_set_message(t('Tags have been imported. @added added, @updated updated, and @removed removed.', ['@added' => $added, '@updated' => $updated, '@removed' => $removed]));
