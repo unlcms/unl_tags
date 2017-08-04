@@ -1,0 +1,9 @@
+name = UNL Tags
+description = Imports UNL tags into a controlled vocab
+package = "UNL"
+core = 7.x
+dependencies[] = taxonomy_machine_name
+configure = admin/unl/tags/import
+
+version = "7.x-1.x"
+core = "7.x"
