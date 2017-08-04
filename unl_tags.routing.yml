@@ -1,7 +1,0 @@
-unl_tags.import_tags:
-  path: '/admin/unl/tags/import'
-  defaults:
-    _form: '\Drupal\unl_tags\Form\ImportTags'
-    _title: 'Import Tags'
-  requirements:
-    _permission: 'administer users'

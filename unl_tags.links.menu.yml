@@ -1,5 +1,0 @@
-unl_tags.import_tags:
-  title: 'Import UNL Tags'
-  parent: entity.taxonomy_vocabulary.collection
-  route_name: unl_tags.import_tags
-  weight: -100
